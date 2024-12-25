@@ -12,21 +12,21 @@ try:
     # Open input GIF
     original_gif = Image.open(input_gif_path)
 
-    # 存储唯一帧
+    # Store unique frames
     unique_frames = []
     frame_hashes = set()
 
-    # 遍历所有帧
+    # Iterate through all frames
     for frame in ImageSequence.Iterator(original_gif):
-        # 保持原始尺寸，只复制帧
+        # Keep original dimensions, only copy the frame
         frame_copy = frame.copy()
 
-        frame_bytes = frame_copy.tobytes()  # 转换为字节数据
+        frame_bytes = frame_copy.tobytes()  # Convert to byte data
         if frame_bytes not in frame_hashes:
             unique_frames.append(frame_copy)
             frame_hashes.add(frame_bytes)
 
-    # 保存去重后的 GIF
+    # Save the deduplicated GIF
     unique_frames[0].save(
         output_gif_path,
         save_all=True,
@@ -36,9 +36,9 @@ try:
         duration=50,
     )
 
-    print(f"优化后的 GIF 已保存到: {output_gif_path}")
-    print(f"原始帧数: {original_gif.n_frames}")
-    print(f"去重后帧数: {len(unique_frames)}")
+    print(f"Optimized GIF saved to: {output_gif_path}")
+    print(f"Original frame count: {original_gif.n_frames}")
+    print(f"Frame count after deduplication: {len(unique_frames)}")
 
 except FileNotFoundError:
     print(f"Error: Input GIF file not found at: {input_gif_path}")
